@@ -43,10 +43,10 @@ export class DataFactory {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       company: faker.company.name(),
-      address: faker.address.buildingNumber(),
-      state: faker.address.state(),
-      city: faker.address.city(),
-      zipcode: faker.address.zipCode(),
+      address: faker.location.buildingNumber(),
+      state: faker.location.state(),
+      city: faker.location.city(),
+      zipcode: faker.location.zipCode(),
       phoneNumber: faker.phone.number(),
     };
   }

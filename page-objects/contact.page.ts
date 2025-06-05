@@ -54,9 +54,7 @@ export class ContactPage {
     await this.fillEmailTextbox(email);
     await this.fillSubjectTextbox(subject);
     await this.fillMessageTextbox(message);
-    const filePath = path.resolve(
-      "C:/Users/Administrator/OneDrive/Desktop/Automation/image0.jpg"
-    ); // talk to dom
+    const filePath = path.resolve(__dirname, "../static/complaint.jpg");
     await this.page.setInputFiles('input[type="file"]', filePath);
     await this.clickSubmitButton();
   }

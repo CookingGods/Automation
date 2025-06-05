@@ -28,8 +28,6 @@ export class SignUpPage {
     this.page = page;
     this.url = "/signup";
 
-    // do not use locator twice
-    // pass data do not create data in the functions
     // locators definitions
     this.nameTextbox = this.page.getByRole("textbox", { name: "Name" });
     this.emailAddressTextbox = this.page
