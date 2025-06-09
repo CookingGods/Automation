@@ -1,4 +1,4 @@
-import { test } from "../fixtures/page-objects.fixtures";
+import { expect, test } from "../fixtures/page-objects.fixtures";
 import { FrontPage } from "../page-objects/front.page";
 
 test("Register User", async ({
@@ -135,7 +135,10 @@ test("Verify All Product and product detail page", async ({
   await productsPage.productSelection();
 
   const productInformation = dataFactory.getBlueTopProductInformation();
-  await productDetailsPage.productBlueTopDetails(productInformation.price);
+  await productDetailsPage.productBlueTopDetails(
+    productInformation.price,
+    productInformation.name
+  );
 });
 
 test("Search Product", async ({
@@ -178,6 +181,7 @@ test("Verify Subscription in CartPage", async ({
   page,
   frontPage,
   dataFactory,
+  viewCartPage,
 }) => {
   await frontPage.goto();
   await frontPage.verifiyOnFrontPage();
@@ -187,8 +191,27 @@ test("Verify Subscription in CartPage", async ({
   const generateAccountInformation = dataFactory.generateAccountInformation();
   await frontPage.validateSubscriptionText(textMessage.subscriptionText);
   await frontPage.fillEmailAddress(generateAccountInformation.email);
-  await frontPage.clickArrowButton();
-  await frontPage.validateSubscriptionText(
+  await viewCartPage.clickArrowButton();
+  await viewCartPage.validateSubscriptionText(
     textMessage.successfulSubscriptionText
+  );
+});
+
+test("Verifiy Product quanity in Cart", async ({
+  page,
+  frontPage,
+  dataFactory,
+  productDetailsPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickBlueTopBViewProduct();
+
+  const quantityNumber = dataFactory.generateAccountInformation();
+  await productDetailsPage.changeQuantityBox(quantityNumber.quantityNumber);
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+  await productDetailsPage.validateQaunityNumberVisible(
+    quantityNumber.quantityNumber
   );
 });

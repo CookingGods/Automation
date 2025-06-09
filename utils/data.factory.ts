@@ -62,6 +62,7 @@ export class DataFactory {
       existingName: "johndoe",
       tester: "SignUpTester",
       productName: "Winter top",
+      quantityNumber: "4",
 
       message: faker.lorem.paragraph(2),
       subject: faker.lorem.sentence(5).replace(/\.$/, ""),

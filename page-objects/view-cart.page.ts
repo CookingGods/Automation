@@ -16,7 +16,7 @@ export class ViewCartPage {
   async fillEmailAddress(email: string): Promise<void> {
     await this.emailAddressTextbox.fill(email);
   }
-  async clickContactUsLink(): Promise<void> {
+  async clickArrowButton(): Promise<void> {
     await this.arrowButton.click();
   }
   async validateSubscriptionText(text: string): Promise<void> {

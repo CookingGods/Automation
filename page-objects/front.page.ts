@@ -11,6 +11,7 @@ export class FrontPage {
   private readonly emailAddressTextbox: Locator;
   private readonly arrowButton: Locator;
   private readonly cartButton: Locator;
+  private readonly blueTopViewProduct: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -28,9 +29,16 @@ export class FrontPage {
     this.cartButton = this.page.getByRole("listitem").filter({
       hasText: "Cart",
     });
+    this.blueTopViewProduct = this.page
+      .locator(".choose > .nav > li > a")
+      .first();
   }
 
   // locator function
+
+  async clickBlueTopBViewProduct(): Promise<void> {
+    await this.blueTopViewProduct.click();
+  }
   async clickCartButton(): Promise<void> {
     await this.cartButton.click();
   }
