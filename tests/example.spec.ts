@@ -1,4 +1,5 @@
 import { test } from "../fixtures/page-objects.fixtures";
+import { FrontPage } from "../page-objects/front.page";
 
 test("Register User", async ({
   page,
@@ -104,7 +105,6 @@ test("Register User with existing email", async ({
   await loginPage.validateSignup(visibleTextMessage.existingSignUpMessage);
 });
 
-// figure out how to to input file
 test("contact form", async ({ page, frontPage, contactPage, dataFactory }) => {
   const generateContactInformation = dataFactory.generateAccountInformation();
   const generateVisibleText = dataFactory.generateVisibleText();
@@ -135,5 +135,24 @@ test("Verify All Product and product detail page", async ({
   await productsPage.productSelection();
 
   const productInformation = dataFactory.getBlueTopProductInformation();
-  await productDetailsPage.productDetails(productInformation.price);
+  await productDetailsPage.productBlueTopDetails(productInformation.price);
+});
+
+test("Search Product", async ({
+  page,
+  frontPage,
+  dataFactory,
+  productsPage,
+  productDetailsPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.gotoProduct();
+
+  const productName = dataFactory.generateAccountInformation();
+  await productsPage.fillProductSearchBarTextProductName(
+    productName.productName
+  );
+  await productsPage.clickSearchButton();
+  await productsPage.productVerfication(productName.productName);
 });

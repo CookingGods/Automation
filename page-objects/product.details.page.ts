@@ -7,9 +7,18 @@ export class ProductDetailsPage {
     this.page = page;
   }
 
-  async productDetails(productPrice: string): Promise<void> {
+  async productBlueTopDetails(productPrice: string): Promise<void> {
     await this.validateProductPriceVisible(productPrice);
     await expect(this.page.getByText("Blue Top")).toBeVisible();
+    await expect(this.page.getByText("Availability")).toBeVisible();
+    await expect(this.page.getByText("Condition")).toBeVisible();
+    await expect(this.page.getByText("Brand:")).toBeVisible();
+    await expect(this.page.getByText("Category:")).toBeVisible();
+  }
+
+  async productWinterTopDetails(productPrice: string): Promise<void> {
+    await this.validateProductPriceVisible(productPrice);
+    await expect(this.page.getByText("Winter Top")).toBeVisible();
     await expect(this.page.getByText("Availability")).toBeVisible();
     await expect(this.page.getByText("Condition")).toBeVisible();
     await expect(this.page.getByText("Brand:")).toBeVisible();

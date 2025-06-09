@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 
 import blueTop from "../static/products/blue-top.json";
+import winterTop from "../static/products/winter-top.json";
 
 // @TODO  create a type for faker and the logins
 type popUpText = {
@@ -12,6 +13,29 @@ type popUpText = {
   newUserSignUpMessage: string;
   usernameLoginMessage: string;
   contactUsMessage: string;
+};
+
+type existingProductAndAccount = {
+  existingEmailAddress: string;
+  existingPassword: string;
+  existingName: string;
+  tester: string;
+  productName: string;
+
+  message: string;
+  subject: string;
+  fullName: string;
+  email: string;
+  password: string;
+  name: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+  address: string;
+  state: string;
+  city: string;
+  zipcode: string;
+  phoneNumber: string;
 };
 export class DataFactory {
   generateVisibleText(): popUpText {
@@ -33,6 +57,7 @@ export class DataFactory {
       existingPassword: "test1",
       existingName: "johndoe",
       tester: "SignUpTester",
+      productName: "Winter top",
 
       message: faker.lorem.paragraph(2),
       subject: faker.lorem.sentence(5).replace(/\.$/, ""),
@@ -53,5 +78,9 @@ export class DataFactory {
 
   getBlueTopProductInformation() {
     return blueTop;
+  }
+
+  getWinterTopProuctInformation() {
+    return winterTop;
   }
 }

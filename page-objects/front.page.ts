@@ -36,7 +36,10 @@ export class FrontPage {
   // other function
   async goto(): Promise<void> {
     await this.page.goto(this.url);
-    await this.page.waitForLoadState();
+  }
+
+  async verifiyOnFrontPage(): Promise<void> {
+    await expect(this.page).toHaveURL("https://automationexercise.com");
   }
   async validateUsername(existingUsername: string): Promise<void> {
     await expect(this.page.getByText(existingUsername)).toBeVisible();
