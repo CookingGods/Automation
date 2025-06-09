@@ -15,6 +15,7 @@ type popUpText = {
   contactUsMessage: string;
   subscriptionText: string;
   successfulSubscriptionText: string;
+  successfullOrderText: string;
 };
 
 type existingProductAndAccount = {
@@ -52,12 +53,14 @@ export class DataFactory {
       contactUsMessage: "GET IN TOUCH",
       subscriptionText: "SUBSCRIPTION",
       successfulSubscriptionText: "You have been successfully",
+      successfullOrderText: "ORDER PLACED!",
     };
   }
   generateAccountInformation() {
     // json obcjet
     return {
       existingEmailAddress: "fake_test@gmail.com",
+      existingAddress: "fakeAddress Texas 10508-0684",
       existingPassword: "test1",
       existingName: "johndoe",
       tester: "SignUpTester",
@@ -78,6 +81,10 @@ export class DataFactory {
       city: faker.location.city(),
       zipcode: faker.location.zipCode(),
       phoneNumber: faker.phone.number(),
+      cardNumber: faker.finance.creditCardNumber(),
+      CVC: faker.finance.creditCardCVV(),
+      expirationMonth: "06",
+      expirationYear: "2025",
     };
   }
 
