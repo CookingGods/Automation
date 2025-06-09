@@ -236,14 +236,9 @@ test("Place Order: Register while checkout", async ({
   await productDetailsPage.clickviewCartLink();
 
   // actual test start here
-  await frontPage.goto();
-  await frontPage.verifiyOnFrontPage();
-  await frontPage.clickCartButton();
-  await viewCartPage.validateCartPage();
-  await viewCartPage.clickProceedToCheckoutBox();
-  await viewCartPage.clickRegisterLoginLink();
   const accountInformation = dataFactory.generateAccountInformation();
   const visibleTextMessage = dataFactory.generateVisibleText();
+  await signUpPage.goto();
   await signUpPage.completeNewUserSignUpForm(
     accountInformation.tester,
     accountInformation.email
@@ -264,6 +259,12 @@ test("Place Order: Register while checkout", async ({
   await accountCreatedPage.validateAndClickContinue(
     visibleTextMessage.accountCreationMessage
   );
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+
   await frontPage.validateExistingUsers(accountInformation.tester);
   await frontPage.clickCartButton();
   await viewCartPage.clickProceedToCheckoutBox();
