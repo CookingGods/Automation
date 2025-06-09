@@ -10,6 +10,7 @@ export class FrontPage {
   private readonly productsLink: Locator;
   private readonly emailAddressTextbox: Locator;
   private readonly arrowButton: Locator;
+  private readonly cartButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -24,6 +25,9 @@ export class FrontPage {
       name: "Your email address",
     });
     this.arrowButton = this.page.getByRole("button", { name: "" });
+    this.cartButton = this.pagegetByRole("listitem").filter({
+      hasText: "Cart",
+    });
   }
 
   // locator function

@@ -173,3 +173,15 @@ test("Verify Subscription in home page", async ({
     textMessage.successfulSubscriptionText
   );
 });
+
+test("Verify Subscription in CartPage", async ({
+  page,
+  frontPage,
+  dataFactory,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+
+  const textMessage = dataFactory.generateVisibleText();
+  const generateAccountInformation = dataFactory.generateAccountInformation();
+});
