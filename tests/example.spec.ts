@@ -1,5 +1,6 @@
-import { test } from "../fixtures/page-objects.fixtures";
+import { expect, test } from "../fixtures/page-objects.fixtures";
 import { FrontPage } from "../page-objects/front.page";
+import { LoginPage } from "../page-objects/login.page";
 
 test("Register User", async ({
   page,
@@ -135,7 +136,10 @@ test("Verify All Product and product detail page", async ({
   await productsPage.productSelection();
 
   const productInformation = dataFactory.getBlueTopProductInformation();
-  await productDetailsPage.productBlueTopDetails(productInformation.price);
+  await productDetailsPage.productBlueTopDetails(
+    productInformation.price,
+    productInformation.name
+  );
 });
 
 test("Search Product", async ({
@@ -178,6 +182,7 @@ test("Verify Subscription in CartPage", async ({
   page,
   frontPage,
   dataFactory,
+  viewCartPage,
 }) => {
   await frontPage.goto();
   await frontPage.verifiyOnFrontPage();
@@ -187,8 +192,214 @@ test("Verify Subscription in CartPage", async ({
   const generateAccountInformation = dataFactory.generateAccountInformation();
   await frontPage.validateSubscriptionText(textMessage.subscriptionText);
   await frontPage.fillEmailAddress(generateAccountInformation.email);
-  await frontPage.clickArrowButton();
-  await frontPage.validateSubscriptionText(
+  await viewCartPage.clickArrowButton();
+  await viewCartPage.validateSubscriptionText(
     textMessage.successfulSubscriptionText
   );
+});
+
+test("Verifiy Product quanity in Cart", async ({
+  page,
+  frontPage,
+  dataFactory,
+  productDetailsPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickBlueTopBViewProduct();
+
+  const quantityNumber = dataFactory.generateAccountInformation();
+  await productDetailsPage.changeQuantityBox(quantityNumber.quantityNumber);
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+  await productDetailsPage.validateQaunityNumberVisible(
+    quantityNumber.quantityNumber
+  );
+});
+test("Place Order: Register while checkout", async ({
+  page,
+  frontPage,
+  dataFactory,
+  viewCartPage,
+  productDetailsPage,
+  signUpPage,
+  accountCreatedPage,
+  deleteAccountPage,
+  checkOutPage,
+  paymentPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test start here
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await viewCartPage.clickRegisterLoginLink();
+  const accountInformation = dataFactory.generateAccountInformation();
+  const visibleTextMessage = dataFactory.generateVisibleText();
+  await signUpPage.completeNewUserSignUpForm(
+    accountInformation.tester,
+    accountInformation.email
+  );
+  await signUpPage.validateOnPage();
+  await signUpPage.fillAllCreateAccountBoxes(
+    accountInformation.password,
+    accountInformation.firstName,
+    accountInformation.lastName,
+    accountInformation.company,
+    accountInformation.address,
+    accountInformation.address,
+    accountInformation.state,
+    accountInformation.city,
+    accountInformation.zipcode,
+    accountInformation.phoneNumber
+  );
+  await accountCreatedPage.validateAndClickContinue(
+    visibleTextMessage.accountCreationMessage
+  );
+  await frontPage.validateExistingUsers(accountInformation.tester);
+  await frontPage.clickCartButton();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await checkOutPage.fillCommentTextBox(accountInformation.message);
+  await checkOutPage.clickPlaceOrderButton();
+  await paymentPage.fillNameOnCardtTextBox(accountInformation.firstName);
+  await paymentPage.fillYearTextBox(accountInformation.expirationYear);
+  await paymentPage.fillMonthTextBox(accountInformation.expirationMonth);
+  await paymentPage.fillCardNumberTextBox(accountInformation.cardNumber);
+  await paymentPage.fillCVCTextBoX(accountInformation.CVC);
+  await paymentPage.clickPayAndOrderButton();
+  await paymentPage.orderValidationMessage(
+    visibleTextMessage.successfullOrderText
+  );
+  await frontPage.clickAccountDeletion();
+  await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
+});
+
+test("Place Order: Register before checkout", async ({
+  page,
+  frontPage,
+  dataFactory,
+  viewCartPage,
+  productDetailsPage,
+  signUpPage,
+  accountCreatedPage,
+  deleteAccountPage,
+  checkOutPage,
+  paymentPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test start here
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  const accountInformation = dataFactory.generateAccountInformation();
+  const visibleTextMessage = dataFactory.generateVisibleText();
+  await signUpPage.goto();
+  await signUpPage.completeNewUserSignUpForm(
+    accountInformation.tester,
+    accountInformation.email
+  );
+
+  await signUpPage.validateOnPage();
+  await signUpPage.fillAllCreateAccountBoxes(
+    accountInformation.password,
+    accountInformation.firstName,
+    accountInformation.lastName,
+    accountInformation.company,
+    accountInformation.address,
+    accountInformation.address,
+    accountInformation.state,
+    accountInformation.city,
+    accountInformation.zipcode,
+    accountInformation.phoneNumber
+  );
+  await accountCreatedPage.validateAndClickContinue(
+    visibleTextMessage.accountCreationMessage
+  );
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+
+  await frontPage.validateExistingUsers(accountInformation.tester);
+  await frontPage.clickCartButton();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await checkOutPage.fillCommentTextBox(accountInformation.message);
+  await checkOutPage.clickPlaceOrderButton();
+  await paymentPage.fillNameOnCardtTextBox(accountInformation.firstName);
+  await paymentPage.fillYearTextBox(accountInformation.expirationYear);
+  await paymentPage.fillMonthTextBox(accountInformation.expirationMonth);
+  await paymentPage.fillCardNumberTextBox(accountInformation.cardNumber);
+  await paymentPage.fillCVCTextBoX(accountInformation.CVC);
+  await paymentPage.clickPayAndOrderButton();
+  await paymentPage.orderValidationMessage(
+    visibleTextMessage.successfullOrderText
+  );
+  await frontPage.clickAccountDeletion();
+  await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
+});
+
+test("Place Order: Login before checkout", async ({
+  page,
+  frontPage,
+  dataFactory,
+  viewCartPage,
+  productDetailsPage,
+  checkOutPage,
+  paymentPage,
+  loginPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test start here
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  const accountInformation = dataFactory.generateAccountInformation();
+  const visibleTextMessage = dataFactory.generateVisibleText();
+  await loginPage.goto();
+  await loginPage.fillLogInUser(
+    accountInformation.existingEmailAddress,
+    accountInformation.existingPassword
+  );
+  await frontPage.validateExistingUsers(
+    visibleTextMessage.usernameLoginMessage
+  );
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+
+  await frontPage.validateExistingUsers(
+    visibleTextMessage.usernameLoginMessage
+  );
+  await frontPage.clickCartButton();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await checkOutPage.fillCommentTextBox(accountInformation.message);
+  await checkOutPage.clickPlaceOrderButton();
+  await paymentPage.fillNameOnCardtTextBox(accountInformation.firstName);
+  await paymentPage.fillYearTextBox(accountInformation.expirationYear);
+  await paymentPage.fillMonthTextBox(accountInformation.expirationMonth);
+  await paymentPage.fillCardNumberTextBox(accountInformation.cardNumber);
+  await paymentPage.fillCVCTextBoX(accountInformation.CVC);
+  await paymentPage.clickPayAndOrderButton();
+  await paymentPage.orderValidationMessage(
+    visibleTextMessage.successfullOrderText
+  );
+  // step 16 is commented out becasuse it will delete the exisiting user but this is the code for it, await frontPage.clickAccountDeletion();
+  // step 17  is commented out becasuse it will delete the exisiting user but this is the code for it, await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
 });
