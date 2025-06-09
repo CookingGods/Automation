@@ -25,13 +25,16 @@ export class FrontPage {
       name: "Your email address",
     });
     this.arrowButton = this.page.getByRole("button", { name: "" });
-    this.cartButton = this.pagegetByRole("listitem").filter({
+    this.cartButton = this.page.getByRole("listitem").filter({
       hasText: "Cart",
     });
   }
 
   // locator function
-  async clickArrowButton() {
+  async clickCartButton(): Promise<void> {
+    await this.cartButton.click();
+  }
+  async clickArrowButton(): Promise<void> {
     await this.arrowButton.click();
   }
   async fillEmailAddress(email: string): Promise<void> {
