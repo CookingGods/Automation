@@ -13,6 +13,8 @@ type popUpText = {
   newUserSignUpMessage: string;
   usernameLoginMessage: string;
   contactUsMessage: string;
+  subscriptionText: string;
+  successfulSubscriptionText: string;
 };
 
 type existingProductAndAccount = {
@@ -48,6 +50,8 @@ export class DataFactory {
       newUserSignUpMessage: "New User Signup!",
       usernameLoginMessage: "Logged in as johndoe",
       contactUsMessage: "GET IN TOUCH",
+      subscriptionText: "SUBSCRIPTION",
+      successfulSubscriptionText: "You have been successfully",
     };
   }
   generateAccountInformation() {

@@ -8,6 +8,8 @@ export class FrontPage {
   private readonly logOutText: Locator;
   private readonly contactUsLink: Locator;
   private readonly productsLink: Locator;
+  private readonly emailAddressTextbox: Locator;
+  private readonly arrowButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -18,10 +20,19 @@ export class FrontPage {
     this.logOutText = this.page.getByRole("link", { name: " Logout" });
     this.contactUsLink = this.page.getByRole("link", { name: " Contact us" });
     this.productsLink = this.page.getByRole("link", { name: " Products" });
+    this.emailAddressTextbox = this.page.getByRole("textbox", {
+      name: "Your email address",
+    });
+    this.arrowButton = this.page.getByRole("button", { name: "" });
   }
 
   // locator function
-
+  async clickArrowButton() {
+    await this.arrowButton.click();
+  }
+  async fillEmailAddress(email: string): Promise<void> {
+    await this.emailAddressTextbox.fill(email);
+  }
   async clickContactUsLink(): Promise<void> {
     await this.contactUsLink.click();
   }
@@ -62,5 +73,13 @@ export class FrontPage {
     await expect(this.page).toHaveURL(
       "https://automationexercise.com/products"
     );
+  }
+
+  async validateSubscriptionText(text: string): Promise<void> {
+    await expect(this.page.getByText(text)).toBeVisible();
+  }
+
+  async validateSucessfulSubscriptionText(text: string): Promise<void> {
+    await expect(this.page.getByText(text)).toBeVisible();
   }
 }

@@ -143,7 +143,6 @@ test("Search Product", async ({
   frontPage,
   dataFactory,
   productsPage,
-  productDetailsPage,
 }) => {
   await frontPage.goto();
   await frontPage.verifiyOnFrontPage();
@@ -155,4 +154,22 @@ test("Search Product", async ({
   );
   await productsPage.clickSearchButton();
   await productsPage.productVerfication(productName.productName);
+});
+
+test("Verify Subscription in home page", async ({
+  page,
+  frontPage,
+  dataFactory,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+
+  const textMessage = dataFactory.generateVisibleText();
+  const generateAccountInformation = dataFactory.generateAccountInformation();
+  await frontPage.validateSubscriptionText(textMessage.subscriptionText);
+  await frontPage.fillEmailAddress(generateAccountInformation.email);
+  await frontPage.clickArrowButton();
+  await frontPage.validateSubscriptionText(
+    textMessage.successfulSubscriptionText
+  );
 });
