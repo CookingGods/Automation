@@ -403,3 +403,22 @@ test("Place Order: Login before checkout", async ({
   // step 16 is commented out becasuse it will delete the exisiting user but this is the code for it, await frontPage.clickAccountDeletion();
   // step 17  is commented out becasuse it will delete the exisiting user but this is the code for it, await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
 });
+
+test("Remove the product from cart", async ({
+  page,
+  frontPage,
+  viewCartPage,
+  productDetailsPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test start here
+
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickBlueTopXButton();
+});
