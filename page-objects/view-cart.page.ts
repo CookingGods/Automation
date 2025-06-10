@@ -6,6 +6,7 @@ export class ViewCartPage {
   private readonly arrowButton: Locator;
   private readonly ProceedToCheckoutBox: Locator;
   private readonly registerLogInLink: Locator;
+  private readonly blueTopXbutton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,13 @@ export class ViewCartPage {
     this.registerLogInLink = this.page.getByRole("link", {
       name: "Register / Login",
     });
+    this.blueTopXbutton = this.page
+      .getByRole("cell", { name: "" })
+      .locator("a");
+  }
+
+  async clickBlueTopXButton(): Promise<void> {
+    await this.blueTopXbutton.click();
   }
 
   async clickRegisterLoginLink(): Promise<void> {
