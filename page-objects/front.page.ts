@@ -12,10 +12,18 @@ export class FrontPage {
   private readonly arrowButton: Locator;
   private readonly cartButton: Locator;
   private readonly blueTopViewProduct: Locator;
+  private readonly womenText: Locator;
+  private readonly dressText: Locator;
+  private readonly menText: Locator;
+  private readonly jeansText: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.url = "";
+
+    this.menText = this.page.getByRole("link", { name: " Men" });
+    this.dressText = this.page.getByRole("link", { name: "Dress" });
+    this.womenText = this.page.getByRole("link", { name: " Women" });
     this.accountDeletionButton = this.page.getByRole("link", {
       name: " Delete Account",
     });
@@ -36,6 +44,16 @@ export class FrontPage {
 
   // locator function
 
+  async clickMenText(): Promise<void> {
+    await this.clickMenText();
+  }
+  async clickDressText(): Promise<void> {
+    await this.dressText.click();
+  }
+
+  async clickWomenText(): Promise<void> {
+    await this.womenText.click();
+  }
   async clickBlueTopBViewProduct(): Promise<void> {
     await this.blueTopViewProduct.click();
   }
@@ -95,6 +113,10 @@ export class FrontPage {
   }
 
   async validateSucessfulSubscriptionText(text: string): Promise<void> {
+    await expect(this.page.getByText(text)).toBeVisible();
+  }
+
+  async validateCategorySection(text: string): Promise<void> {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 }

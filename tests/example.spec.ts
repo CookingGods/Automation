@@ -422,3 +422,26 @@ test("Remove the product from cart", async ({
   await viewCartPage.validateCartPage();
   await viewCartPage.clickBlueTopXButton();
 });
+
+test("View category Product", async ({
+  page,
+  frontPage,
+  dataFactory,
+  categoryProductsPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  const testValidation = dataFactory.generateVisibleText();
+  await frontPage.validateCategorySection(testValidation.categorySectionText);
+  await frontPage.clickWomenText();
+  await frontPage.clickDressText();
+
+  await categoryProductsPage.validateWomenDressProductText(
+    testValidation.womanCategoryText
+  );
+  await categoryProductsPage.clickMenText();
+  await categoryProductsPage.clickMenJeanText();
+  await categoryProductsPage.validateMenDressURL(
+    testValidation.menJeanCategoryURL
+  );
+});
