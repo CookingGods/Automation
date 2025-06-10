@@ -16,6 +16,10 @@ type popUpText = {
   subscriptionText: string;
   successfulSubscriptionText: string;
   successfullOrderText: string;
+  categorySectionText: string;
+  womanCategoryText: string;
+  menJeanCategoryText: string;
+  menJeanCategoryURL: string;
 };
 
 type existingProductAndAccount = {
@@ -39,10 +43,13 @@ type existingProductAndAccount = {
   city: string;
   zipcode: string;
   phoneNumber: string;
+  womanCategoryText: string;
+  menJeanCategoryText: string;
 };
 export class DataFactory {
   generateVisibleText(): popUpText {
     return {
+      categorySectionText: "CATEGORY",
       accountCreationMessage: "ACCOUNT CREATED",
       existingSignUpMessage: "Email Address already exist!",
       accountDeleted: "ACCOUNT DELETED",
@@ -54,6 +61,9 @@ export class DataFactory {
       subscriptionText: "SUBSCRIPTION",
       successfulSubscriptionText: "You have been successfully",
       successfullOrderText: "ORDER PLACED!",
+      womanCategoryText: "Women - Dress Products",
+      menJeanCategoryText: "Men - Jeans Products",
+      menJeanCategoryURL: "https://automationexercise.com/category_products/6",
     };
   }
   generateAccountInformation() {
