@@ -67,8 +67,11 @@ export class ProductDetailsPage {
   async validateProductPriceVisible(productPrice: string): Promise<void> {
     await expect(this.page.getByText(productPrice)).toBeVisible();
   }
-  async validateProductNameVisible(productName: string): Promise<void> {
+  async validateProductNameVisible2(productName: string): Promise<void> {
     await expect(this.page.getByText(productName).nth(1)).toBeVisible();
+  }
+  async validateProductNameVisible(productName: string): Promise<void> {
+    await expect(this.page.getByText(productName)).toBeVisible();
   }
 
   async validateQaunityNumberVisible(quanityNumber: string): Promise<void> {

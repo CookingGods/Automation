@@ -124,7 +124,7 @@ test("Verify Test Cases Page", async ({ page, testPage }) => {
   await testPage.validateOnPage();
 });
 
-test("Verify All Product and product detail page", async ({
+test("Verify All Products and product detail page", async ({
   page,
   productDetailsPage,
   productsPage,
@@ -484,7 +484,7 @@ test("Search Products and Verify Cart After Login", async ({
     generateProductName.productName
   );
   await productsPage.clickSearchButton();
-  await productDetailsPage.validateProductNameVisible(
+  await productDetailsPage.validateProductNameVisible2(
     generateProductName.productName
   );
   await productDetailsPage.clickAddTOCartButtonSroll();
