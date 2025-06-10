@@ -30,7 +30,7 @@ export class SignUpPage {
     this.url = "/signup";
 
     // locators definitions
-
+    this.nameTextbox = this.page.getByRole("textbox", { name: "Name" });
     this.emailAddressTextbox = this.page
       .locator("form")
       .filter({ hasText: "Signup" })
