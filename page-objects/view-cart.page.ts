@@ -7,6 +7,7 @@ export class ViewCartPage {
   private readonly ProceedToCheckoutBox: Locator;
   private readonly registerLogInLink: Locator;
   private readonly blueTopXbutton: Locator;
+  private readonly signUpLogInLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -21,8 +22,17 @@ export class ViewCartPage {
     this.blueTopXbutton = this.page
       .getByRole("cell", { name: "" })
       .locator("a");
+    this.signUpLogInLink = this.page.getByRole("link", {
+      name: " Signup / Login",
+    });
   }
 
+  async clickSignUpLoginLink(): Promise<void> {
+    await this.signUpLogInLink.click();
+  }
+  async validateItems(item: string): Promise<void> {
+    await expect(this.page.getByText(item)).toBeVisible();
+  }
   async clickBlueTopXButton(): Promise<void> {
     await this.blueTopXbutton.click();
   }
