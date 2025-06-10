@@ -14,14 +14,11 @@ export class FrontPage {
   private readonly blueTopViewProduct: Locator;
   private readonly womenText: Locator;
   private readonly dressText: Locator;
-  private readonly menText: Locator;
-  private readonly jeansText: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.url = "";
 
-    this.menText = this.page.getByRole("link", { name: " Men" });
     this.dressText = this.page.getByRole("link", { name: "Dress" });
     this.womenText = this.page.getByRole("link", { name: " Women" });
     this.accountDeletionButton = this.page.getByRole("link", {
@@ -117,6 +114,10 @@ export class FrontPage {
   }
 
   async validateCategorySection(text: string): Promise<void> {
+    await expect(this.page.getByText(text)).toBeVisible();
+  }
+
+  async validateBrandText(text: string): Promise<void> {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 }

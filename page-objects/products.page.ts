@@ -6,7 +6,7 @@ export class ProductsPage {
   //locators
   private readonly searchButton: Locator;
   private readonly productSearchBarText: Locator;
-
+  private readonly brandPoloLink: Locator;
   constructor(page: Page) {
     this.page = page;
     this.selectingProduct = this.page
@@ -16,8 +16,12 @@ export class ProductsPage {
       name: "Search Product",
     });
     this.searchButton = this.page.getByRole("button", { name: "" });
+    this.brandPoloLink = this.page.getByRole("link", { name: "(6) Polo" });
   }
 
+  async clickBrandPolo() {
+    await this.brandPoloLink.click();
+  }
   async clickSearchButton() {
     await this.searchButton.click();
   }
@@ -38,5 +42,8 @@ export class ProductsPage {
 
   async productVerfication(productName: string): Promise<void> {
     await expect(this.page.getByText(productName).nth(1)).toBeVisible();
+  }
+  async validateBrandURL(URL: string): Promise<void> {
+    await expect(this.page).toHaveURL(URL);
   }
 }
