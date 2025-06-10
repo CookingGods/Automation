@@ -20,32 +20,11 @@ type popUpText = {
   womanCategoryText: string;
   menJeanCategoryText: string;
   menJeanCategoryURL: string;
+  brandText: string;
+  brandURL: string;
+  brandProductPoloURl: string;
 };
 
-type existingProductAndAccount = {
-  existingEmailAddress: string;
-  existingPassword: string;
-  existingName: string;
-  tester: string;
-  productName: string;
-
-  message: string;
-  subject: string;
-  fullName: string;
-  email: string;
-  password: string;
-  name: string;
-  firstName: string;
-  lastName: string;
-  company: string;
-  address: string;
-  state: string;
-  city: string;
-  zipcode: string;
-  phoneNumber: string;
-  womanCategoryText: string;
-  menJeanCategoryText: string;
-};
 export class DataFactory {
   generateVisibleText(): popUpText {
     return {
@@ -64,6 +43,9 @@ export class DataFactory {
       womanCategoryText: "Women - Dress Products",
       menJeanCategoryText: "Men - Jeans Products",
       menJeanCategoryURL: "https://automationexercise.com/category_products/6",
+      brandText: "Brands",
+      brandURL: "https://automationexercise.com/products",
+      brandProductPoloURl: "https://automationexercise.com/brand_products/Polo",
     };
   }
   generateAccountInformation() {

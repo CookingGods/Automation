@@ -13,6 +13,7 @@ import { ViewCartPage } from "../page-objects/view-cart.page";
 import { CheckOutPage } from "../page-objects/checkout.page";
 import { PaymentPage } from "../page-objects/payment.page";
 import { CategoryProductsPage } from "../page-objects/category-products.page";
+import { BrandProductPoloPage } from "../page-objects/brand-product-polo.page";
 
 type pageObject = {
   signUpPage: SignUpPage;
@@ -29,6 +30,7 @@ type pageObject = {
   paymentPage: PaymentPage;
   dataFactory: DataFactory;
   categoryProductsPage: CategoryProductsPage;
+  brandProductPoloPage: BrandProductPoloPage;
 };
 const test = base.extend<pageObject>({
   signUpPage: async ({ page }, use) => {
@@ -73,6 +75,9 @@ const test = base.extend<pageObject>({
   },
   categoryProductsPage: async ({ page }, use) => {
     await use(new CategoryProductsPage(page));
+  },
+  brandProductPoloPage: async ({ page }, use) => {
+    await use(new BrandProductPoloPage(page));
   },
 });
 

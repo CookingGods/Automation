@@ -445,3 +445,21 @@ test("View category Product", async ({
     testValidation.menJeanCategoryURL
   );
 });
+
+test("View & Cart brand Products", async ({
+  page,
+  frontPage,
+  dataFactory,
+  brandProductPoloPage,
+  productsPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.clickProductLink();
+  const testValidation = dataFactory.generateVisibleText();
+  await frontPage.validateBrandText(testValidation.brandText);
+  await productsPage.validateBrandURL(testValidation.brandURL);
+  await productsPage.clickBrandPolo();
+  await brandProductPoloPage.validateBrandProductPoloURL(
+    testValidation.brandProductPoloURl
+  );
+});
