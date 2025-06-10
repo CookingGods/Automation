@@ -463,3 +463,41 @@ test("View & Cart brand Products", async ({
     testValidation.brandProductPoloURl
   );
 });
+
+test("Search Products and Verify Cart After Login", async ({
+  page,
+  frontPage,
+  dataFactory,
+  brandProductPoloPage,
+  productDetailsPage,
+  productsPage,
+  viewCartPage,
+  loginPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.clickProductLink();
+  const testValidation = dataFactory.generateVisibleText();
+  const generateProductName = dataFactory.generateAccountInformation();
+
+  await productsPage.validateBrandURL(testValidation.brandURL);
+  await productsPage.fillProductSearchBarTextProductName(
+    generateProductName.productName
+  );
+  await productsPage.clickSearchButton();
+  await productDetailsPage.validateProductNameVisible(
+    generateProductName.productName
+  );
+  await productDetailsPage.clickAddTOCartButtonSroll();
+  await productDetailsPage.clickviewCartLink();
+  await productDetailsPage.clickCartButton();
+
+  await viewCartPage.validateItems(generateProductName.productName);
+  await viewCartPage.clickSignUpLoginLink();
+  await loginPage.fillemailAddressTextBox(
+    generateProductName.existingEmailAddress
+  );
+  await loginPage.fillPasswordTextBox(generateProductName.existingPassword);
+  await loginPage.clickLoginInButton();
+  await frontPage.clickCartButton();
+  await viewCartPage.validateItems(generateProductName.productName);
+});

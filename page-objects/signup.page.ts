@@ -23,13 +23,14 @@ export class SignUpPage {
   private readonly zipCodeTextbox: Locator;
   private readonly mobilePhoneNumberTextbox: Locator;
   private readonly createAccountButton: Locator;
+  private readonly cartButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.url = "/signup";
 
     // locators definitions
-    this.nameTextbox = this.page.getByRole("textbox", { name: "Name" });
+
     this.emailAddressTextbox = this.page
       .locator("form")
       .filter({ hasText: "Signup" })
