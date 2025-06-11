@@ -23,6 +23,8 @@ type popUpText = {
   brandText: string;
   brandURL: string;
   brandProductPoloURl: string;
+  productPageURL: string;
+  thankYouMessage: string;
 };
 
 export class DataFactory {
@@ -46,6 +48,8 @@ export class DataFactory {
       brandText: "Brands",
       brandURL: "https://automationexercise.com/products",
       brandProductPoloURl: "https://automationexercise.com/brand_products/Polo",
+      productPageURL: "https://automationexercise.com/products",
+      thankYouMessage: "Thank you for your review.",
     };
   }
   generateAccountInformation() {

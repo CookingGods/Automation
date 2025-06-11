@@ -7,9 +7,16 @@ export class ProductDetailsPage {
   private readonly addToCartButtonScrollDown: Locator;
   private readonly viewCartLink: Locator;
   private readonly cartButton: Locator;
+  private readonly yourNameTextBox: Locator;
+  private readonly emailAddressTextBox: Locator;
+  private readonly reviewTextBox: Locator;
+  private readonly submitButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.yourNameTextBox = this.page.getByRole("textbox", {
+      name: "Your Name",
+    });
     this.quantityBox = this.page.locator("#quantity");
     this.addToCartButton = this.page.getByRole("button", {
       name: " Add to cart",
@@ -17,23 +24,43 @@ export class ProductDetailsPage {
     this.viewCartLink = this.page.getByRole("link", { name: "View Cart" });
     this.addToCartButtonScrollDown = this.page.getByText("Add to cart").nth(1);
     this.cartButton = this.page.getByRole("link", { name: " Cart" });
+    this.emailAddressTextBox = this.page.getByRole("textbox", {
+      name: "Email Address",
+      exact: true,
+    });
+    this.reviewTextBox = this.page.getByRole("textbox", {
+      name: "Add Review Here!",
+    });
+    this.submitButton = this.page.getByRole("button", { name: "Submit" });
   }
-  async clickCartButton() {
+  async clickSubmitButton() {
+    await this.submitButton.click();
+  }
+  async fillReviewTextBox(message: string): Promise<void> {
+    await this.reviewTextBox.fill(message);
+  }
+  async fillEmailAddressTextBox(email: string): Promise<void> {
+    await this.emailAddressTextBox.fill(email);
+  }
+  async fillYourNameTextBox(name: string): Promise<void> {
+    await this.yourNameTextBox.fill(name);
+  }
+  async clickCartButton(): Promise<void> {
     await this.cartButton.click();
   }
-  async clickviewCartLink() {
+  async clickviewCartLink(): Promise<void> {
     await this.viewCartLink.click();
   }
-  async clickAddTOCartButton() {
+  async clickAddTOCartButton(): Promise<void> {
     await this.addToCartButton.click();
   }
-  async clickAddTOCartButtonSroll() {
+  async clickAddTOCartButtonSroll(): Promise<void> {
     await this.addToCartButtonScrollDown.click();
   }
-  async clickQuantityBox() {
+  async clickQuantityBox(): Promise<void> {
     await this.quantityBox.click();
   }
-  async clearQuantityNumberBox() {
+  async clearQuantityNumberBox(): Promise<void> {
     await this.quantityBox.clear();
   }
   async fillQuanityBox(number: string) {
@@ -76,5 +103,8 @@ export class ProductDetailsPage {
 
   async validateQaunityNumberVisible(quanityNumber: string): Promise<void> {
     await expect(this.page.getByText(quanityNumber)).toBeVisible();
+  }
+  async validateThankYouMessageVisible(message: string): Promise<void> {
+    await expect(this.page.getByText(message)).toBeVisible();
   }
 }

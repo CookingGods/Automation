@@ -216,6 +216,24 @@ test("Verifiy Product quanity in Cart", async ({
     quantityNumber.quantityNumber
   );
 });
+
+/*//@TODO  finished this
+test("Add Products in Cart", async ({
+  page,
+  frontPage,
+  productsPage,
+  dataFactory,
+  productDetailsPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickProductLink();
+  await page.locator(".product-overlay").first().hover();
+  await productsPage.clickBlueTopOverLayShoppingCart();
+
+  const confirmationText = dataFactory.generateVisibleText();
+  await productsPage.productText("Added!");
+});*/
 test("Place Order: Register while checkout", async ({
   page,
   frontPage,
@@ -500,4 +518,29 @@ test("Search Products and Verify Cart After Login", async ({
   await loginPage.clickLoginInButton();
   await frontPage.clickCartButton();
   await viewCartPage.validateItems(generateProductName.productName);
+});
+
+test("Add review on product", async ({
+  page,
+  frontPage,
+  dataFactory,
+
+  productDetailsPage,
+  productsPage,
+  loginPage,
+}) => {
+  await frontPage.goto();
+  await frontPage.clickProductLink();
+  await frontPage.clickProductLink();
+  const testValidation = dataFactory.generateVisibleText();
+  const generateProductName = dataFactory.generateAccountInformation();
+  await productsPage.validateProductPageURL(testValidation.productPageURL);
+  await productsPage.clickViewProductButton();
+  await productDetailsPage.fillYourNameTextBox(generateProductName.name);
+  await productDetailsPage.fillEmailAddressTextBox(generateProductName.email);
+  await productDetailsPage.fillReviewTextBox(generateProductName.message);
+  await productDetailsPage.clickSubmitButton();
+  await productDetailsPage.validateThankYouMessageVisible(
+    testValidation.thankYouMessage
+  );
 });
