@@ -544,3 +544,22 @@ test("Add review on product", async ({
     testValidation.thankYouMessage
   );
 });
+
+test("Add to cart from Recommended items", async ({
+  page,
+  frontPage,
+  dataFactory,
+
+  productDetailsPage,
+  productsPage,
+  loginPage,
+}) => {
+  await frontPage.goto();
+
+  const testValidation = dataFactory.generateVisibleText();
+  const generateProductName = dataFactory.generateAccountInformation();
+  await frontPage.validateRecommendItemText(testValidation.recommendedItem);
+  await frontPage.clickAddTOCartButton();
+  await expect(page.getByText("view cart")).toBeVisible();
+  await frontPage.clickViewCart();
+});

@@ -14,11 +14,17 @@ export class FrontPage {
   private readonly blueTopViewProduct: Locator;
   private readonly womenText: Locator;
   private readonly dressText: Locator;
+  private readonly addToCartButton: Locator;
+  private readonly viewCart: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.url = "";
 
+    this.viewCart = this.page.getByRole("link", { name: "View Cart" });
+    this.addToCartButton = this.page.locator(
+      "div:nth-child(2) > div:nth-child(2) > .product-image-wrapper > .single-products > .productinfo > .btn"
+    );
     this.dressText = this.page.getByRole("link", { name: "Dress" });
     this.womenText = this.page.getByRole("link", { name: " Women" });
     this.accountDeletionButton = this.page.getByRole("link", {
@@ -41,8 +47,15 @@ export class FrontPage {
 
   // locator function
 
+  async clickViewCart() {
+    await this.viewCart.click();
+  }
+  async clickAddTOCartButton(): Promise<void> {
+    await this.addToCartButton.click();
+  }
+
   async clickMenText(): Promise<void> {
-    await this.clickMenText();
+    await this.clickMenText;
   }
   async clickDressText(): Promise<void> {
     await this.dressText.click();
@@ -118,6 +131,10 @@ export class FrontPage {
   }
 
   async validateBrandText(text: string): Promise<void> {
+    await expect(this.page.getByText(text)).toBeVisible();
+  }
+
+  async validateRecommendItemText(text: string): Promise<void> {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 }
