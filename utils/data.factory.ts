@@ -26,6 +26,14 @@ type popUpText = {
   productPageURL: string;
   thankYouMessage: string;
   recommendedItem: string;
+  productOneName: string;
+  productOnePrices: string;
+  productOneQuantity: string;
+  productOneTotalPrice: string;
+  productTwoName: string;
+  productTwoPrices: string;
+  productTwoQuantity: string;
+  productTwoTotalPrice: string;
 };
 
 export class DataFactory {
@@ -52,6 +60,14 @@ export class DataFactory {
       productPageURL: "https://automationexercise.com/products",
       thankYouMessage: "Thank you for your review.",
       recommendedItem: "RECOMMENDED ITEMS",
+      productOneName: "Blue Top",
+      productOnePrices: "500",
+      productOneQuantity: "1",
+      productOneTotalPrice: "Rs. 500",
+      productTwoName: "Men Tshirt",
+      productTwoPrices: "400",
+      productTwoQuantity: "1",
+      productTwoTotalPrice: "Rs. 400",
     };
   }
   generateAccountInformation() {

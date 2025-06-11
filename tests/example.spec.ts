@@ -217,23 +217,37 @@ test("Verifiy Product quanity in Cart", async ({
   );
 });
 
-/*//@TODO  finished this
 test("Add Products in Cart", async ({
   page,
   frontPage,
   productsPage,
   dataFactory,
   productDetailsPage,
+  viewCartPage,
 }) => {
   await frontPage.goto();
   await frontPage.verifiyOnFrontPage();
   await frontPage.clickProductLink();
-  await page.locator(".product-overlay").first().hover();
-  await productsPage.clickBlueTopOverLayShoppingCart();
+  await productsPage.hoverAndClickAddToCart();
+  await productsPage.clickContinueShoppingButton();
+  await productsPage.hoverAndClickAddToCartSecondProduct();
+  await productsPage.clickViewCartButton();
 
-  const confirmationText = dataFactory.generateVisibleText();
-  await productsPage.productText("Added!");
-});*/
+  const productVerfication = dataFactory.generateVisibleText();
+  await viewCartPage.validateProducts(
+    productVerfication.productOneName,
+    productVerfication.productOnePrices,
+    productVerfication.productOneQuantity,
+    productVerfication.productOneTotalPrice
+  );
+  await viewCartPage.validateProducts(
+    productVerfication.productTwoName,
+    productVerfication.productTwoPrices,
+    productVerfication.productTwoQuantity,
+    productVerfication.productTwoTotalPrice
+  );
+});
+
 test("Place Order: Register while checkout", async ({
   page,
   frontPage,

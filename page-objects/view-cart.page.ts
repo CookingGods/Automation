@@ -8,6 +8,7 @@ export class ViewCartPage {
   private readonly registerLogInLink: Locator;
   private readonly blueTopXbutton: Locator;
   private readonly signUpLogInLink: Locator;
+  private readonly productRow: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -60,5 +61,17 @@ export class ViewCartPage {
     await expect(this.page).toHaveURL(
       "https://automationexercise.com/view_cart"
     );
+  }
+
+  async validateProducts(
+    name: string,
+    price: string,
+    quanity: string,
+    totalPrice: string
+  ) {
+    const productRow = this.page.locator("tr", { hasText: name });
+    await expect(productRow).toContainText(price);
+    await expect(productRow).toContainText(quanity);
+    await expect(productRow).toContainText(totalPrice);
   }
 }
