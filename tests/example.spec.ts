@@ -709,3 +709,19 @@ test("Download invoice after purchase order", async ({
   await frontPage.clickAccountDeletion();
   await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
 });
+
+test("Verify Scroll Up using 'Arrow' button and Sroll down funcitonality ", async ({
+  page,
+  frontPage,
+}) => {
+  // actual test
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+
+  for (let i = 0; i < 100; i++) {
+    await page.keyboard.press("ArrowDown");
+  }
+  for (let i = 0; i < 100; i++) {
+    await page.keyboard.press("ArrowUp");
+  }
+});
