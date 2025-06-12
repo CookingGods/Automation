@@ -20,4 +20,7 @@ export class CheckOutPage {
   async clickPlaceOrderButton(): Promise<void> {
     await this.placeOrderButton.click();
   }
+  async validateAddress(address: string): Promise<void> {
+    await expect(this.page).toHaveURL(address);
+  }
 }

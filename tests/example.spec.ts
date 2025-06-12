@@ -563,10 +563,6 @@ test("Add to cart from Recommended items", async ({
   page,
   frontPage,
   dataFactory,
-
-  productDetailsPage,
-  productsPage,
-  loginPage,
 }) => {
   await frontPage.goto();
 
@@ -576,4 +572,140 @@ test("Add to cart from Recommended items", async ({
   await frontPage.clickAddTOCartButton();
   await expect(page.getByText("view cart")).toBeVisible();
   await frontPage.clickViewCart();
+});
+
+test("Verify address details in checkout page", async ({
+  frontPage,
+  signUpPage,
+  dataFactory,
+  accountCreatedPage,
+  productDetailsPage,
+  viewCartPage,
+  deleteAccountPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  const accountInformation = dataFactory.generateAccountInformation();
+  const visibleTextMessage = dataFactory.generateVisibleText();
+
+  await signUpPage.goto();
+  await signUpPage.completeNewUserSignUpForm(
+    accountInformation.tester,
+    accountInformation.email
+  );
+
+  const userFirstName = accountInformation.firstName;
+  const userLastName = accountInformation.lastName;
+  const userCompany = accountInformation.company;
+  const userAddress = accountInformation.address;
+  const userSecondAddress = accountInformation.address;
+  const userState = accountInformation.state;
+  const userCity = accountInformation.city;
+  const userZipcode = accountInformation.zipcode;
+  const userPhoneNumber = accountInformation.phoneNumber;
+  await signUpPage.validateOnPage();
+  await signUpPage.fillAllCreateAccountBoxes(
+    accountInformation.password,
+    userFirstName,
+    userLastName,
+    userCompany,
+    userAddress,
+    userSecondAddress,
+    userState,
+    userCity,
+    userZipcode,
+    userPhoneNumber
+  );
+  await accountCreatedPage.validateAndClickContinue(
+    visibleTextMessage.accountCreationMessage
+  );
+  await frontPage.validateExistingUsers(accountInformation.tester);
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+  //@TODO finish 12-13
+  // await frontPage.clickAccountDeletion();
+  // await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
+});
+
+// missing step 14
+test("Download invoice after purchase order", async ({
+  frontPage,
+  signUpPage,
+  dataFactory,
+  accountCreatedPage,
+  productDetailsPage,
+  viewCartPage,
+  deleteAccountPage,
+  paymentPage,
+  checkOutPage,
+}) => {
+  // setup for the test
+  await frontPage.goto();
+  await frontPage.clickBlueTopBViewProduct();
+
+  await productDetailsPage.clickAddTOCartButton();
+  await productDetailsPage.clickviewCartLink();
+
+  // actual test
+  await frontPage.goto();
+  await frontPage.verifiyOnFrontPage();
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await viewCartPage.clickRegisterLoginLink();
+
+  const accountInformation = dataFactory.generateAccountInformation();
+  const visibleTextMessage = dataFactory.generateVisibleText();
+  await signUpPage.completeNewUserSignUpForm(
+    accountInformation.tester,
+    accountInformation.email
+  );
+
+  const validateAdress = accountInformation.address;
+  await signUpPage.validateOnPage();
+  await signUpPage.fillAllCreateAccountBoxes(
+    accountInformation.password,
+    accountInformation.firstName,
+    accountInformation.lastName,
+    accountInformation.company,
+    validateAdress,
+    validateAdress,
+    accountInformation.state,
+    accountInformation.city,
+    accountInformation.zipcode,
+    accountInformation.phoneNumber
+  );
+  await accountCreatedPage.validateAndClickContinue(
+    visibleTextMessage.accountCreationMessage
+  );
+
+  await frontPage.clickCartButton();
+  await viewCartPage.validateCartPage();
+  await viewCartPage.clickProceedToCheckoutBox();
+  await checkOutPage.fillCommentTextBox(accountInformation.message);
+  await checkOutPage.clickPlaceOrderButton();
+  await paymentPage.fillNameOnCardtTextBox(accountInformation.firstName);
+  await paymentPage.fillYearTextBox(accountInformation.expirationYear);
+  await paymentPage.fillMonthTextBox(accountInformation.expirationMonth);
+  await paymentPage.fillCardNumberTextBox(accountInformation.cardNumber);
+  await paymentPage.fillCVCTextBoX(accountInformation.CVC);
+  await paymentPage.clickPayAndOrderButton();
+  await paymentPage.orderValidationMessage(
+    visibleTextMessage.successfullOrderText
+  );
+
+  await paymentPage.clickDownloadInvoiceButton();
+  await paymentPage.clickContinueButton();
+
+  await frontPage.clickAccountDeletion();
+  await deleteAccountPage.accountDeletion(visibleTextMessage.accountDeleted);
 });
