@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { time } from "console";
 
 export class PaymentPage {
   private readonly page: Page;
@@ -8,6 +9,8 @@ export class PaymentPage {
   private readonly yearTextBox: Locator;
   private readonly CVCTextBox: Locator;
   private readonly payAndOrderButton: Locator;
+  private readonly downloadInvoiceButton: Locator;
+  private readonly continueButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,8 +22,18 @@ export class PaymentPage {
     this.payAndOrderButton = this.page.getByRole("button", {
       name: "Pay and Confirm Order",
     });
+    this.downloadInvoiceButton = this.page.getByRole("link", {
+      name: "Download Invoice",
+    });
+    this.continueButton = this.page.getByRole("link", { name: "Continue" });
+  }
+  async clickContinueButton() {
+    await this.continueButton.click();
   }
 
+  async clickDownloadInvoiceButton(): Promise<void> {
+    await this.downloadInvoiceButton.click();
+  }
   async clickPayAndOrderButton(): Promise<void> {
     await this.payAndOrderButton.click();
   }
